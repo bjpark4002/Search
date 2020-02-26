@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AvengersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblCategory">
+    <Key>
+      <PropertyRef Name="Category_ID" />
+    </Key>
+    <Property Name="Category_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Category_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblSubCategory" Relationship="Self.FK__tblSubCat__Categ__3B75D760" FromRole="tblCategory" ToRole="tblSubCategory" />
+  </EntityType>
+  <EntityType Name="tblManufacturer">
+    <Key>
+      <PropertyRef Name="Manufacturer_ID" />
+    </Key>
+    <Property Name="Manufacturer_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Manufacturer_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblProduct" Relationship="Self.FK__tblProduc__Manuf__403A8C7D" FromRole="tblManufacturer" ToRole="tblProduct" />
+  </EntityType>
+  <EntityType Name="tblProduct">
+    <Key>
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Product_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Manufacturer_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SubCategory_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Product_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Product_Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Series" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Model_Year" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Series_Info" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Featured" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblManufacturer" Relationship="Self.FK__tblProduc__Manuf__403A8C7D" FromRole="tblProduct" ToRole="tblManufacturer" />
+    <NavigationProperty Name="tblSubCategory" Relationship="Self.FK__tblProduc__SubCa__412EB0B6" FromRole="tblProduct" ToRole="tblSubCategory" />
+  </EntityType>
+  <EntityType Name="tblSubCategory">
+    <Key>
+      <PropertyRef Name="SubCategory_ID" />
+    </Key>
+    <Property Name="SubCategory_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Category_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SubCategory_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblCategory" Relationship="Self.FK__tblSubCat__Categ__3B75D760" FromRole="tblSubCategory" ToRole="tblCategory" />
+    <NavigationProperty Name="tblProduct" Relationship="Self.FK__tblProduc__SubCa__412EB0B6" FromRole="tblSubCategory" ToRole="tblProduct" />
+    <NavigationProperty Name="tblTechSpecFilter" Relationship="Self.FK__tblTechSp__SubCa__46E78A0C" FromRole="tblSubCategory" ToRole="tblTechSpecFilter" />
+    <NavigationProperty Name="tblTypeFilter" Relationship="Self.FK__tblTypeFi__SubCa__440B1D61" FromRole="tblSubCategory" ToRole="tblTypeFilter" />
+  </EntityType>
+  <EntityType Name="tblTechSpecFilter">
+    <Key>
+      <PropertyRef Name="SubCategory_ID" />
+    </Key>
+    <Property Name="SubCategory_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Min_Value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Max_Value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblSubCategory" Relationship="Self.FK__tblTechSp__SubCa__46E78A0C" FromRole="tblTechSpecFilter" ToRole="tblSubCategory" />
+  </EntityType>
+  <EntityType Name="tblTypeFilter">
+    <Key>
+      <PropertyRef Name="SubCategory_ID" />
+    </Key>
+    <Property Name="SubCategory_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Type_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type_Options" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblSubCategory" Relationship="Self.FK__tblTypeFi__SubCa__440B1D61" FromRole="tblTypeFilter" ToRole="tblSubCategory" />
+  </EntityType>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="User_ID" />
+    </Key>
+    <Property Name="User_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="User_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="User_Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="User_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK__tblSubCat__Categ__3B75D760">
+    <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1" />
+    <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCategory">
+        <PropertyRef Name="Category_ID" />
+      </Principal>
+      <Dependent Role="tblSubCategory">
+        <PropertyRef Name="Category_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblProduc__Manuf__403A8C7D">
+    <End Role="tblManufacturer" Type="Self.tblManufacturer" Multiplicity="0..1" />
+    <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblManufacturer">
+        <PropertyRef Name="Manufacturer_ID" />
+      </Principal>
+      <Dependent Role="tblProduct">
+        <PropertyRef Name="Manufacturer_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblProduc__SubCa__412EB0B6">
+    <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="0..1" />
+    <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSubCategory">
+        <PropertyRef Name="SubCategory_ID" />
+      </Principal>
+      <Dependent Role="tblProduct">
+        <PropertyRef Name="SubCategory_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblTechSp__SubCa__46E78A0C">
+    <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1" />
+    <End Role="tblTechSpecFilter" Type="Self.tblTechSpecFilter" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="tblSubCategory">
+        <PropertyRef Name="SubCategory_ID" />
+      </Principal>
+      <Dependent Role="tblTechSpecFilter">
+        <PropertyRef Name="SubCategory_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblTypeFi__SubCa__440B1D61">
+    <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1" />
+    <End Role="tblTypeFilter" Type="Self.tblTypeFilter" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="tblSubCategory">
+        <PropertyRef Name="SubCategory_ID" />
+      </Principal>
+      <Dependent Role="tblTypeFilter">
+        <PropertyRef Name="SubCategory_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AvengersEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblCategory" EntityType="Self.tblCategory" />
+    <EntitySet Name="tblManufacturer" EntityType="Self.tblManufacturer" />
+    <EntitySet Name="tblProduct" EntityType="Self.tblProduct" />
+    <EntitySet Name="tblSubCategory" EntityType="Self.tblSubCategory" />
+    <EntitySet Name="tblTechSpecFilter" EntityType="Self.tblTechSpecFilter" />
+    <EntitySet Name="tblTypeFilter" EntityType="Self.tblTypeFilter" />
+    <EntitySet Name="tblUser" EntityType="Self.tblUser" />
+    <AssociationSet Name="FK__tblSubCat__Categ__3B75D760" Association="Self.FK__tblSubCat__Categ__3B75D760">
+      <End Role="tblCategory" EntitySet="tblCategory" />
+      <End Role="tblSubCategory" EntitySet="tblSubCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblProduc__Manuf__403A8C7D" Association="Self.FK__tblProduc__Manuf__403A8C7D">
+      <End Role="tblManufacturer" EntitySet="tblManufacturer" />
+      <End Role="tblProduct" EntitySet="tblProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblProduc__SubCa__412EB0B6" Association="Self.FK__tblProduc__SubCa__412EB0B6">
+      <End Role="tblSubCategory" EntitySet="tblSubCategory" />
+      <End Role="tblProduct" EntitySet="tblProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblTechSp__SubCa__46E78A0C" Association="Self.FK__tblTechSp__SubCa__46E78A0C">
+      <End Role="tblSubCategory" EntitySet="tblSubCategory" />
+      <End Role="tblTechSpecFilter" EntitySet="tblTechSpecFilter" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblTypeFi__SubCa__440B1D61" Association="Self.FK__tblTypeFi__SubCa__440B1D61">
+      <End Role="tblSubCategory" EntitySet="tblSubCategory" />
+      <End Role="tblTypeFilter" EntitySet="tblTypeFilter" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

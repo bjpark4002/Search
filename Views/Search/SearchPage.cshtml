@@ -1,0 +1,212 @@
+﻿
+@model Database.tblSubCategories
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/search/Search.css" />
+    <title>SearchPage</title>
+
+    @*jquery*@
+
+
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.0.min.js" type="text/javascript"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+          rel="Stylesheet" type="text/css" />
+
+
+
+
+
+</head>
+
+@*<body style="
+    height: 600px;
+    background-color: #1d6aa1;
+    background-image: linear-gradient(#1d6aa1,white);
+    text-align:center;
+    ">*@
+
+<body>
+
+
+
+    <div style="
+    height: 600px;
+    background-color: #1d6aa1;
+    background-image: linear-gradient(#1d6aa1,white);
+    text-align:center;
+    ">
+        <img src="https://i.imgur.com/9zX8Fuz.png[/img]" alt="Logo" width="240" height="110" style="margin-top:100px;"><br /><br />
+        <b>Building Product Selection Platform</b><br />
+
+        <br />
+        <select class="target" id="categoryFilterId" style="
+                height:28px;
+                width: 92px;
+                background-color: #1d6aa1;
+                padding: 4px;
+                border: 1px;
+                text-align-last: left;
+                border-radius: 5px;
+
+            ">
+
+            <option>Category</option>
+            @foreach (var categoryName in ViewBag.CategoryList)
+            {
+                <option id="selectedVal" name="sectedValName" value=@categoryName.Category_ID style="background-color:white;"> @categoryName.Category_Name </option>
+            }
+        </select>
+        @*@Html.DropDownListFor(m => m.SubCategory_ID, new SelectList(""), "--search item--", new { style = "width:270px; padding:4px; border-radius: 5px; margin-left:-4px;" })*@
+
+
+
+        @*<button style="margin-left:-3px; height:27px; width:30px; border-radius:5px; background-image:url(https://i.imgur.com/S1TIy2i.png[/img]); ">s</button>*@
+        @*<input type="button" value="Go " class="button-add" style="background-image:url(https://i.imgur.com/S1TIy2i.png[/img])" />*@
+        @*<button type="submit" name="learn" value="myimage" style="border-radius:5px; height:28px ;width:25px;">
+            <img src="https://i.imgur.com/CGUKlTp.png[/img]" width="30" height="28" style="margin-top:-3px;  margin-left:-10px;border-radius:5px; " />
+        </button>*@
+
+
+        <input type="text" id="txtSubCategory" name="CustomerName"  
+               style="
+                height:28px; 
+                width:290px;
+                border-radius: 5px; 
+                margin-left:-4px;  
+                border-color:transparent;
+                " 
+               placeholder="Search..."/>
+        <input type="hidden" id="hfCustomer" name="CustomerId" style="width:290px"/>
+        @*<br /><br />
+        <input type="submit" id="btnSubmit" value="Submit" />
+        <br /><br />
+        <input type="text" id="txtTestId" name="txtTestName" />*@
+        <button id="submitButtonId" type="submit" name="learn" value="myimage" style="border-radius:5px; height:28px ;width:25px;">
+            <img src="https://i.imgur.com/CGUKlTp.png[/img]" width="30" height="28" style="margin-top:-3px;  margin-left:-10px;border-radius:5px; " />
+        </button>
+
+    </div>
+
+
+    
+    <script>
+         var SelectedCategoryIdVar = "Category";
+         var SelectedSubCategoryIdVar = "0";
+
+        //category search bar
+        $(document).ready(function () {
+           
+            $("#categoryFilterId").change(function () {
+                 SelectedCategoryIdVar = $("#categoryFilterId").val(); // category ID +
+                $("#txtTestId").val(SelectedCategoryIdVar);
+                $.ajax({
+                    type: "Post",
+                    url: "/Search/GetFilteredSubCategories?categoryId=" + SelectedCategoryIdVar,
+                    contentType: "html",
+
+                    success: function (response) {
+
+                        $("#SubCategory_ID").empty();
+                        $("#SubCategory_ID").append(response);
+
+ 
+
+                    }
+                })
+            })
+        })
+
+
+
+
+        //SubCategory Search bar
+        $(function () {    
+            $("#txtSubCategory").autocomplete({
+              
+                source: function (request, response) {
+                      //console.log(SelectedCategoryIdVar);
+                    SelectedSubCategoryIdVar = $("#categoryFilterId").val()
+                    $.ajax({
+                        url: '/Search/AutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "','filterId':'"+SelectedCategoryIdVar+"'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#hfCustomer").val(i.item.val);
+                },
+                minLength: 0
+            }).focus(function () {
+                $(this).autocomplete("search");
+            });
+        });
+
+
+
+
+        //clicking search button 
+
+        $(function () {
+            $("#submitButtonId").click(function (e) {
+                SelectedSubCategoryIdVar = $("#txtSubCategory").val(); // SubCategory ID +
+
+                console.log(SelectedSubCategoryIdVar);
+
+                if (SelectedCategoryIdVar == "Category")
+                    alert("Please Select Category");
+                else if (SelectedSubCategoryIdVar == "")
+                    alert("Please Search Product Name");
+
+                $.ajax({
+                    type: "POST",
+                    url: "FindResult",
+                    contentType: "application/json; charset=utf-8",  
+                    data: "{ 'CategoryId': '" + SelectedCategoryIdVar+ "','SubCategoryId':'"+SelectedSubCategoryIdVar+"'}",
+                    //success: function (data) {
+                    //    console.log(data)
+                    //}
+
+
+                })
+            })
+
+        });
+
+     
+    </script>
+
+
+</body>
+
+</html>

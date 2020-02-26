@@ -1,0 +1,19 @@
+﻿
+<option value="" 
+        style="
+        background-color: red;
+        text-align: center;
+        width:1200px;
+        ">Search..</option>
+@if (ViewBag.SubOptions != null)
+{
+
+
+    foreach (var item in ViewBag.SubOptions)
+    {
+        <option value="@item.Value">@item.Text</option>
+
+    }
+}
+
+

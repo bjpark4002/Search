@@ -1,0 +1,190 @@
+﻿@model IList<Itlize.Models.Product>
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .products_container {
+        width: 100vw;
+        /*height: 100vh;*/
+        display: grid;
+        grid-template-columns: 20% 75%
+    }
+
+    .productsView {
+        /*padding: 5px;*/
+        /*height: 100vh;*/
+        border: 1px solid grey;
+        display: inline-block;
+    }
+
+    .productFilters {
+        padding-top: 5px;
+        /*height: 100vh;*/
+        border: 1px solid grey;
+        display: inline-block;
+    }
+
+    .breadcrumb {
+        background-color: white
+    }
+
+    .products_wrapper {
+        display: grid
+    }
+
+    .searchbtns button {
+        background-color: grey;
+        color: white;
+        border: 0px;
+        margin-left: 10px;
+        width: 60px;
+    }
+
+        .searchbtns button:hover {
+            background-color: dimgray;
+        }
+
+    .filters_container .btn {
+        width: 100%;
+        border-radius: 0px;
+        background-color: gainsboro;
+    }
+
+    .filters_container {
+        margin-top: 5px;
+    }
+
+    .btnIcn {
+    }
+
+    .filters_container .well {
+        background-color: white;
+        border: 0;
+        margin-bottom: 0px;
+    }
+
+    ul {
+        display: grid;
+        grid-template-columns: 250px 250px 250px 250px;
+        grid-template-rows: auto;
+        grid-gap: 5px;
+    }
+
+    .productCard {
+        border: 1px solid #d4d4d4;
+        width: 250px;
+        height: 400px;
+        padding: 0 0 10px 0;
+    }
+
+        .productCard:hover {
+            border: 2px solid #8295ba;
+        }
+
+    .btnIcn {
+        transition: all .5s;
+        font-size: large;
+        font-weight: bold;
+        display: inline-block;
+        float: right
+    }
+
+    .btnIcnT {
+        transform: rotate(0.25turn);
+        transition: all .5s;
+    }
+
+    .pT {
+        margin: 0px;
+    }
+</style>
+
+<div class="products_container">
+    <div class="productFilters">
+        <div class="searchbtns" style="text-align: center">
+            <p style="display:inline-block">Search: </p>
+            <button>Save</button>
+            <button>Clear</button>
+        </div>
+
+        <div class="filters_container">
+            <button class="btn btn-default" id="filter1" type="button" onclick="myFunction()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Product Type <div class="btnIcn">></div>
+            </button>
+            <div class="collapse" id="collapseExample">
+                <div class="well">
+                    filter1
+                </div>
+            </div>
+
+            <button class="btn btn-default" id="filter2" type="button" onclick="myFunction()" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+                Technical Specifications <div class="btnIcn">></div>
+            </button>
+            <div class="collapse" id="collapseExample2">
+                <div class="well">
+                    filter2
+                </div>
+            </div>
+            <button class="btn btn-default" id="filter3" type="button" onclick="myFunction()" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
+                Techinacal Specifications <div class="btnIcn">></div>
+            </button>
+            <div class="collapse" id="collapseExample3">
+                <div class="well">
+                    filter3
+                </div>
+            </div>
+            <button class="btn btn-default" id="filter4" type="button" onclick="myFunction()" data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample">
+                Techinacal Specifications <div class="btnIcn">></div>
+            </button>
+            <div class="collapse" id="collapseExample4">
+                <div class="well">
+                    filter4
+                </div>
+            </div>
+            <button class="btn btn-default" id="filter5" type="button" onclick="myFunction()" data-toggle="collapse" data-target="#collapseExample5" aria-expanded="false" aria-controls="collapseExample">
+                Techinacal Specifications <div class="btnIcn">></div>
+            </button>
+            <div class="collapse" id="collapseExample5">
+                <div class="well">
+                    filter5
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="productsView">
+        <ol class="breadcrumb">
+            <li><a href="#">Mechanical</a></li>
+            <li class="active"><a href="#">Fans</a></li>
+        </ol>
+        <div class="products_wrapper">
+            <ul>
+                @foreach (var obj in Model)
+                {
+                    <div class="productCard">
+                        <div style="width:250px;height:200px">
+                            <div>
+                                @obj.Featured
+                            </div>
+                            <img alt="Product Image" width="250" height="100" />
+                        </div>
+                        <div style="text-align:center;">
+                            <p class="pT"><strong>@obj.Product_Name</strong></p>
+                            <p class="pT"><strong>@obj.Series</strong></p>
+                            <p class="pT"><strong>@obj.Model</strong></p>
+                        </div>
+                    </div>
+                }
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function myFunction(e) {
+        console.log(event.target.id);
+        $("#" + event.target.id + " .btnIcn").toggleClass("btnIcnT")
+    }
+</script>

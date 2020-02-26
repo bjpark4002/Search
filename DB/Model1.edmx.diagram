@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a7c6f7b3e818433faf2946123f7f5cd8" Name="Diagram1">
+        <EntityTypeShape EntityType="AvengersModel.tblCategory" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvengersModel.tblManufacturer" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvengersModel.tblProduct" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvengersModel.tblSubCategory" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvengersModel.tblTechSpecFilter" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvengersModel.tblTypeFilter" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvengersModel.tblUser" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="AvengersModel.FK__tblSubCat__Categ__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="AvengersModel.FK__tblProduc__Manuf__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="AvengersModel.FK__tblProduc__SubCa__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="AvengersModel.FK__tblTechSp__SubCa__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="AvengersModel.FK__tblTypeFi__SubCa__440B1D61" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

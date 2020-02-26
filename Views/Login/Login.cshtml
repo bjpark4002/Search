@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+
+
+<body background="~/Content/images/background.jpg">
+
+    <div class="container">
+        <div class="form-horizontal ">
+            <div class="col-lg-2 col-lg-offset-10">
+
+                <a href="#" class="signupLink">Sign Up</a>
+
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" id="loginModal"
+             data-keyboard="false" data-backdrop="static">
+
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+
+
+
+                        <button type="button" class="close" data-dismiss="modal">X</button>
+
+
+                        <h4 class="modal-title">Register as User</h4>
+                    </div>
+
+
+                    <div class="modal-body">
+                        <form id="newregister" action="@Url.Action("Register", "User")" method="post">
+
+                            <div class="form-group">
+                                <label for="exampleInputImage">Image Preview</label>
+                                <br />
+                                <img src="~/Content/images/joole111.png" class="profileImage" />
+                                <br />
+                                <label for="exampleInputFile">File input</label>
+                                <input type="file" name="userpic" id="exampleInputFile">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Username">User Name:</label>
+                                <input class="form-control" type="text"
+                                       placeholder="User Name" name="newusername" id="inputUserName" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Username">Email Address:</label>
+                                <input class="form-control" type="text"
+                                       placeholder="Email Id" name="newuseremail" id="inputEmail" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Username">Password:</label>
+                                <input class="form-control" placeholder="Password"
+                                       type="password" name="newuserpassword" id="inputPassword" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Username">Confirm Password:</label>
+                                <input class="form-control" placeholder="Confirm Password"
+                                       type="password" id="inputConfirmPassword" />
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" form="newregister">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="row main">
+            <div class="panel-heading">
+                <div class="panel-title text-center">
+                    <img src="~/Content/images/joole111.png" width="300" height="160" />
+
+                    <h3>Building Product Selection Platform</h3>
+                </div>
+            </div>
+            <div class="main-login main-center">
+
+                <form class="form-horizontal" action="/Login/Verify" method="post">
+
+
+                    <div class="form-group">
+                        <div class="col-lg-4 col-lg-offset-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="User_Email" id="name" placeholder="Username or Email" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-4 col-lg-offset-4">
+                            <div class="input-group">
+                                <input type="password" class="form-control" name="User_Password" id="password" placeholder="Password" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="col-lg-2 col-lg-offset-6">
+                            <button type="submit" class="btn btn-primary pull-right">Log In</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".signupLink").click(function () {
+                $("#loginModal").modal('show');
+            });
+            $("#btnHideModal").click(function () {
+                $("#loginModal").modal('hide');
+            });
+        });
+    </script>
+
+</body>
+</html>
