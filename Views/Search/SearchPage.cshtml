@@ -20,8 +20,7 @@
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
 
@@ -57,7 +56,9 @@
         <b>Building Product Selection Platform</b><br />
 
         <br />
-        <select class="target" id="categoryFilterId" style="
+        <form action="../Product/products">
+
+            <select class="target" id="categoryFilterId" style="
                 height:28px;
                 width: 92px;
                 background-color: #1d6aa1;
@@ -68,40 +69,40 @@
 
             ">
 
-            <option>Category</option>
-            @foreach (var categoryName in ViewBag.CategoryList)
-            {
-                <option id="selectedVal" name="sectedValName" value=@categoryName.Category_ID style="background-color:white;"> @categoryName.Category_Name </option>
-            }
-        </select>
-        @*@Html.DropDownListFor(m => m.SubCategory_ID, new SelectList(""), "--search item--", new { style = "width:270px; padding:4px; border-radius: 5px; margin-left:-4px;" })*@
+                <option>Category</option>
+                @foreach (var categoryName in ViewBag.CategoryList)
+                {
+                    <option id="selectedVal" name="sectedValName" value=@categoryName.Category_ID style="background-color:white;"> @categoryName.Category_Name </option>
+
+                }
+            </select>
 
 
 
-        @*<button style="margin-left:-3px; height:27px; width:30px; border-radius:5px; background-image:url(https://i.imgur.com/S1TIy2i.png[/img]); ">s</button>*@
-        @*<input type="button" value="Go " class="button-add" style="background-image:url(https://i.imgur.com/S1TIy2i.png[/img])" />*@
-        @*<button type="submit" name="learn" value="myimage" style="border-radius:5px; height:28px ;width:25px;">
-            <img src="https://i.imgur.com/CGUKlTp.png[/img]" width="30" height="28" style="margin-top:-3px;  margin-left:-10px;border-radius:5px; " />
-        </button>*@
 
-
-        <input type="text" id="txtSubCategory" name="CustomerName"  
-               style="
-                height:28px; 
+            <input type="text" id="txtSubCategory" name="SubCategoryName"
+                   style="
+                height:28px;
                 width:290px;
-                border-radius: 5px; 
-                margin-left:-4px;  
+                border-radius: 5px;
+                margin-left:-4px;
                 border-color:transparent;
-                " 
-               placeholder="Search..."/>
-        <input type="hidden" id="hfCustomer" name="CustomerId" style="width:290px"/>
-        @*<br /><br />
+                "
+                   placeholder="Search..." />
+
+            @*<input style="display:none" name="sectedValName" value="@categoryName.Category_ID" />*@
+            <input type="hidden" id="hfCategory" name="CategoryId"  />
+
+            <input type="hidden" id="hfSubCategory" name="SubCategoryId" />
+            <input type="hidden" id ="initialPageLoaderID" name="initialPageLoader" value="InitialPage"/>
+            @*<br /><br />
         <input type="submit" id="btnSubmit" value="Submit" />
         <br /><br />
         <input type="text" id="txtTestId" name="txtTestName" />*@
-        <button id="submitButtonId" type="submit" name="learn" value="myimage" style="border-radius:5px; height:28px ;width:25px;">
-            <img src="https://i.imgur.com/CGUKlTp.png[/img]" width="30" height="28" style="margin-top:-3px;  margin-left:-10px;border-radius:5px; " />
-        </button>
+            <button id="submitButtonId" type="submit" name="learn" value="myimage" style="border-radius:5px; height:28px ;width:25px;">
+                <img src="https://i.imgur.com/CGUKlTp.png[/img]" width="30" height="28" style="margin-top:-3px;  margin-left:-10px;border-radius:5px; " />
+            </button>
+        </form>
 
     </div>
 
@@ -115,8 +116,11 @@
         $(document).ready(function () {
            
             $("#categoryFilterId").change(function () {
+                console.log(SelectedCategoryIdVar);
+
                  SelectedCategoryIdVar = $("#categoryFilterId").val(); // category ID +
                 $("#txtTestId").val(SelectedCategoryIdVar);
+                $("#hfCategory").val(SelectedCategoryIdVar);
                 $.ajax({
                     type: "Post",
                     url: "/Search/GetFilteredSubCategories?categoryId=" + SelectedCategoryIdVar,
@@ -137,7 +141,7 @@
 
 
 
-        //SubCategory Search bar
+        //SubCategory autocomplete Search bar
         $(function () {    
             $("#txtSubCategory").autocomplete({
               
@@ -164,49 +168,13 @@
                     });
                 },
                 select: function (e, i) {
-                    $("#hfCustomer").val(i.item.val);
+                    $("#hfSubCategory").val(i.item.val);
                 },
                 minLength: 0
             }).focus(function () {
                 $(this).autocomplete("search");
             });
         });
-
-
-
-
-        //clicking search button 
-
-        $(function () {
-            $("#submitButtonId").click(function (e) {
-                SelectedSubCategoryIdVar = $("#txtSubCategory").val(); // SubCategory ID +
-
-                console.log(SelectedSubCategoryIdVar);
-
-                if (SelectedCategoryIdVar == "Category")
-                    alert("Please Select Category");
-                else if (SelectedSubCategoryIdVar == "")
-                    alert("Please Search Product Name");
-
-                $.ajax({
-                    type: "POST",
-                    url: "FindResult",
-                    contentType: "application/json; charset=utf-8",  
-                    data: "{ 'CategoryId': '" + SelectedCategoryIdVar+ "','SubCategoryId':'"+SelectedSubCategoryIdVar+"'}",
-                    //success: function (data) {
-                    //    console.log(data)
-                    //}
-
-
-                })
-            })
-
-        });
-
-     
     </script>
-
-
 </body>
-
 </html>

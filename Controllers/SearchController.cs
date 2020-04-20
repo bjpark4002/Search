@@ -51,7 +51,11 @@ namespace Itlize.Controllers
             return View();
         }
 
-
+        //public ActionResult getCategoyViewBag()
+        //{
+        //    ViewBag.CategoryList = GetTblCategoriesList();
+        //    return ;
+        //}
         public ActionResult SearchPage()
         {
 
@@ -64,13 +68,23 @@ namespace Itlize.Controllers
 
         public ActionResult FindResult(string CategoryId, string SubCategoryId)
         {
-            ViewData["CategoryId"] = CategoryId;
-            ViewData["SubCategoryId"] = SubCategoryId;
+            //ViewData["CategoryId"] = CategoryId;
+            //ViewData["SubCategoryId"] = SubCategoryId;
 
             //return RedirectToAction("Products", "Product");
             return View("../Product/Products");
 
         }
+
+        public ActionResult GetCategoryListPartial()
+        {
+            var Categories = GetTblCategoriesList();
+            ViewBag.CategoryListPartial = GetTblCategoriesList();
+            ViewBag.SubCategoryListPartial = GetTblSubCategoriesList();
+
+            return PartialView("GetCategoryListPartial", Categories);
+        }
+
 
         public List<tblCategories> GetTblCategoriesList()
         {

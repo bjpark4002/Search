@@ -5,6 +5,11 @@
 }
 
 <style>
+
+    .slidecontainer {
+        width: 100%;
+    }
+
     .products_container {
         width: 100vw;
         /*height: 100vh;*/
@@ -99,15 +104,32 @@
     .pT {
         margin: 0px;
     }
+
+    div.ui-slider-range.ui-widget-header {
+        background: gray;
+        top: 3px;
+    }
+
+
+    .ui-slider-handle.ui-state-default.ui-corner-all {
+        color: blue;
+        top: -9px;
+    }
 </style>
+
+<input type="hidden" id="ViewDataCate" value='@ViewData["CategoryId"]' />
+<input type="hidden" id="ViewDataSub" value='@ViewData["SubCategoryId"]' />
+<input type="hidden" id="initialPageLoaderId" value='@ViewData["initialPageLoader"]' />
+Initial = @ViewData["initialPageLoader"]
 
 <div class="products_container">
     <div class="productFilters">
-        <div class="searchbtns" style="text-align: center">
+        <div class="searchbtns" style="text-align: center ">
             <p style="display:inline-block">Search: </p>
-            <button>Save</button>
+            <button id="SaveButtonID">Save</button>
             <button>Clear</button>
         </div>
+
 
         <div class="filters_container">
             <button class="btn btn-default" id="filter1" type="button" onclick="myFunction()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -115,7 +137,7 @@
             </button>
             <div class="collapse" id="collapseExample">
                 <div class="well">
-                    filter1
+                    Model Year
                 </div>
             </div>
 
@@ -124,61 +146,120 @@
             </button>
             <div class="collapse" id="collapseExample2">
                 <div class="well">
-                    filter2
+                    <img src="https://i.imgur.com/hDbtYdc.png[/img]" alt="Smiley face" height="15" width="15">
+                    AirFlow (CFM)<br />
+                    @*<input type="range" min="1" max="100" value="10000">*@
+                    <input type="text" id="AirFlowAmount1" name="AirFlowAmount1" readonly style="border:0; font-weight:bold; width:30px;">
+                    <div id="AirFlow-slider-range" style="color:blueviolet; width:100px; display:inline-block; height:2px"></div>
+                    <input type="text" id="AirFlowAmount2" name="AirFlowAmount2" readonly style="border:0; font-weight:bold; width:30px; margin-left:10px">
+
+                </div>
+                <div class="well">
+                    <img src="https://i.imgur.com/hDbtYdc.png[/img]" alt="Smiley face" height="15" width="15">
+                    Max Power (W)<br />
+                    <input type="text" id="MaxPowerAmount1" readonly style="border:0; font-weight:bold; width:30px;">
+                    <div id="MaxPower-slider-range" style="color:blueviolet; width:100px; display:inline-block; height:2px"></div>
+                    <input type="text" id="MaxPowerAmount2" readonly style="border:0; font-weight:bold; width:30px; margin-left:10px">
+
+                </div>
+                <div class="well">
+                    <img src="https://i.imgur.com/hDbtYdc.png[/img]" alt="Smiley face" height="15" width="15">
+                    Sound at max speed (dBA)<br />
+                    <input type="text" id="MaxSoundAmount1" readonly style="border:0; font-weight:bold; width:30px;">
+                    <div id="MaxSound-slider-range" style="color:blueviolet; width:100px; display:inline-block; height:2px"></div>
+                    <input type="text" id="MaxSoundAmount2" readonly style="border:0; font-weight:bold; width:30px; margin-left:10px">
+
+                </div>
+                <div class="well">
+                    <img src="https://i.imgur.com/hDbtYdc.png[/img]" alt="Smiley face" height="15" width="15">
+                    Fan sweep diameter (in)<br />
+                    <input type="text" id="FanAmount1" readonly style="border:0; font-weight:bold; width:30px;">
+                    <div id="Fan-slider-range" style="color:blueviolet; width:100px; display:inline-block; height:2px"></div>
+                    <input type="text" id="FanAmount2" readonly style="border:0; font-weight:bold; width:30px; margin-left:10px">
+
+                </div>
+                <div class="well">
+                    <img src="https://i.imgur.com/hDbtYdc.png[/img]" alt="Smiley face" height="15" width="15">
+                    Height (in)<br />
+                    <input type="text" id="HeightAmount1" readonly style="border:0; font-weight:bold; width:30px;">
+                    <div id="Height-slider-range" style="color:blueviolet; width:100px; display:inline-block; height:2px"></div>
+                    <input type="text" id="HeightAmount2" readonly style="border:0; font-weight:bold; width:30px; margin-left:10px">
+
                 </div>
             </div>
             <button class="btn btn-default" id="filter3" type="button" onclick="myFunction()" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
-                Techinacal Specifications <div class="btnIcn">></div>
+                Brand <div class="btnIcn">></div>
             </button>
             <div class="collapse" id="collapseExample3">
                 <div class="well">
-                    filter3
+                    @*<img src="https://i.imgur.com/hDbtYdc.png[/img]" alt="Smiley face" height="15" width="15">
+                        <p style="text-align:left">Brand1</p>
+                        @{Html.RenderAction("SlidePartial", "Product");}*@
+
                 </div>
             </div>
             <button class="btn btn-default" id="filter4" type="button" onclick="myFunction()" data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample">
-                Techinacal Specifications <div class="btnIcn">></div>
+                Past Selections <div class="btnIcn">></div>
             </button>
             <div class="collapse" id="collapseExample4">
                 <div class="well">
-                    filter4
+                    <img src="https://i.imgur.com/hDbtYdc.png[/img]" alt="Smiley face" height="15" width="15">
+                    Firm<br />
+
+                    <input type="text" id="FirmAmount1" readonly style="border:0; font-weight:bold; width:30px;">
+                    <div id="Firm-slider-range" style="color:blueviolet; width:100px; display:inline-block; height:2px"></div>
+                    <input type="text" id="FirmAmount2" readonly style="border:0; font-weight:bold; width:30px; margin-left:10px">
+
+                </div>
+                <div class="well">
+                    <img src="https://i.imgur.com/hDbtYdc.png[/img]" alt="Smiley face" height="15" width="15">
+                    Global<br />
+
+                    <input type="text" id="GlobalAmount1" readonly style="border:0; font-weight:bold; width:30px;">
+                    <div id="Global-slider-range" style="color:blueviolet; width:100px; display:inline-block; height:2px"></div>
+                    <input type="text" id="GlobalAmount2" readonly style="border:0; font-weight:bold; width:30px; margin-left:10px">
+
                 </div>
             </div>
             <button class="btn btn-default" id="filter5" type="button" onclick="myFunction()" data-toggle="collapse" data-target="#collapseExample5" aria-expanded="false" aria-controls="collapseExample">
-                Techinacal Specifications <div class="btnIcn">></div>
+                Certifications <div class="btnIcn">></div>
             </button>
             <div class="collapse" id="collapseExample5">
                 <div class="well">
-                    filter5
+                    Certifications1
                 </div>
             </div>
         </div>
     </div>
+
+
     <div class="productsView">
         <ol class="breadcrumb">
             <li><a href="#">Mechanical</a></li>
             <li class="active"><a href="#">Fans</a></li>
         </ol>
-        <div class="products_wrapper">
-            <ul>
-                @foreach (var obj in Model)
-                {
-                    <div class="productCard">
-                        <div style="width:250px;height:200px">
-                            <div>
-                                @obj.Featured
-                            </div>
-                            <img alt="Product Image" width="250" height="100" />
-                        </div>
-                        <div style="text-align:center;">
-                            <p class="pT"><strong>@obj.Product_Name</strong></p>
-                            <p class="pT"><strong>@obj.Series</strong></p>
-                            <p class="pT"><strong>@obj.Model</strong></p>
-                        </div>
-                    </div>
-                }
+        <div class="products_wrapper" id="partial1">
+            @foreach (var showing in ViewBag.initialOutput)
+            {
+                <label>@showing.Product_Name</label><br />
+            }
 
-            </ul>
+            @*@{
+            var tem1 = Convert.ToString(ViewData["initialPageLoader"]);
+            if (tem1 == "InitialPage")
+            {
+                <label> haha : @ViewData["initialPageLoader"] </label>
+                //Html.RenderAction("ProductResult", "Product");
+                ViewData["initialPageLoader"] = "no_More";
+            }
+        }*@
+
+
+
         </div>
+        @*<div id="partial2">
+                @Html.Partial("ProductResult")
+            </div>*@
     </div>
 </div>
 
@@ -187,4 +268,173 @@
         console.log(event.target.id);
         $("#" + event.target.id + " .btnIcn").toggleClass("btnIcnT")
     }
+
+    //airflow
+    $(function () {
+        $("#AirFlow-slider-range").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [1, 11],
+            slide: function (event, ui) {
+                $("#AirFlowAmount1").val(ui.values[0]);
+                $("#AirFlowAmount2").val(ui.values[1]);
+            }
+        }); // default vals
+        $("#AirFlowAmount1").val($("#AirFlow-slider-range").slider("values", 0));
+        $("#AirFlowAmount2").val($("#AirFlow-slider-range").slider("values", 1));
+    });
+
+    //max power
+    $(function () {
+        $("#MaxPower-slider-range").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [2, 22],
+            slide: function (event, ui) {
+                $("#MaxPowerAmount1").val(ui.values[0]);
+                $("#MaxPowerAmount2").val(ui.values[1]);
+            }
+        }); // default vals
+        $("#MaxPowerAmount1").val($("#MaxPower-slider-range").slider("values", 0));
+        $("#MaxPowerAmount2").val($("#MaxPower-slider-range").slider("values", 1));
+    });
+
+
+    //max sound
+
+    $(function () {
+        $("#MaxSound-slider-range").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [3, 33],
+            slide: function (event, ui) {
+                $("#MaxSoundAmount1").val(ui.values[0]);
+                $("#MaxSoundAmount2").val(ui.values[1]);
+            }
+        }); // default vals
+        $("#MaxSoundAmount1").val($("#MaxSound-slider-range").slider("values", 0));
+        $("#MaxSoundAmount2").val($("#MaxSound-slider-range").slider("values", 1));
+    });
+
+    // Fan Sweep
+    $(function () {
+        $("#Fan-slider-range").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [4, 44],
+            slide: function (event, ui) {
+                $("#FanAmount1").val(ui.values[0]);
+                $("#FanAmount2").val(ui.values[1]);
+            }
+        }); // default vals
+        $("#FanAmount1").val($("#Fan-slider-range").slider("values", 0));
+        $("#FanAmount2").val($("#Fan-slider-range").slider("values", 1));
+    });
+
+    //Height
+    $(function () {
+        $("#Height-slider-range").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [5, 55],
+            slide: function (event, ui) {
+                $("#HeightAmount1").val(ui.values[0]);
+                $("#HeightAmount2").val(ui.values[1]);
+            }
+        }); // default vals
+        $("#HeightAmount1").val($("#Height-slider-range").slider("values", 0));
+        $("#HeightAmount2").val($("#Height-slider-range").slider("values", 1));
+    });
+    //Firm
+    $(function () {
+        $("#Firm-slider-range").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [6, 66],
+            slide: function (event, ui) {
+                $("#FirmAmount1").val(ui.values[0]);
+                $("#FirmAmount2").val(ui.values[1]);
+            }
+        }); // default vals
+        $("#FirmAmount1").val($("#Firm-slider-range").slider("values", 0));
+        $("#FirmAmount2").val($("#Firm-slider-range").slider("values", 1));
+    });
+    //Global
+    $(function () {
+        $("#Global-slider-range").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [7, 77],
+            slide: function (event, ui) {
+                $("#GlobalAmount1").val(ui.values[0]);
+                $("#GlobalAmount2").val(ui.values[1]);
+            }
+        }); // default vals
+        $("#GlobalAmount1").val($("#Global-slider-range").slider("values", 0));
+        $("#GlobalAmount2").val($("#Global-slider-range").slider("values", 1));
+    });
+
+
+
+    $("#SaveButtonID").click(function () {
+
+        var air_flow_var1 = $("#AirFlowAmount1").val()
+        var air_flow_var2 = $("#AirFlowAmount2").val()
+
+        var max_power_var1 = $("#MaxPowerAmount1").val()
+        var max_power_var2 = $("#MaxPowerAmount2").val()
+
+        var max_sound_var1 = $("#MaxSoundAmount1").val()
+        var max_sound_var2 = $("#MaxSoundAmount2").val()
+
+        var fan_var1 = $("#FanAmount1").val()
+        var fan_var2 = $("#FanAmount2").val()
+
+        var height_var1 = $("#HeightAmount1").val()
+        var height_var2 = $("#HeightAmount2").val()
+
+        var firm_var1 = $("#FirmAmount1").val()
+        var firm_var2 = $("#FirmAmount2").val()
+
+        var global_var1 = $("#GlobalAmount1").val()
+        var global_var2 = $("#GlobalAmount2").val()
+
+        var cat = $("#ViewDataCate").val()
+        var sub = $("#ViewDataSub").val()
+
+        var initialLoader = $("#initialPageLoaderId").val()
+        console.log(cat)
+        console.log(sub)
+        //console.log(initialLoader)
+
+        $("#initialPageLoaderId").val("nomore")
+        $.ajax({
+            url: "ProductResult",
+            //data: "{ 'AirFlowAmount1': '" + air_flow_var1 + "','AirFlowAmount2':'" + air_flow_var2 + "'}",
+            data: {
+                Cate: cat, SubC: sub,
+                AirFlowAmount1: air_flow_var1, AirFlowAmount2: air_flow_var2,
+                MaxPowerAmount1: max_power_var1, MaxPowerAmount2: max_power_var2,
+                MaxSoundAmount1: max_sound_var1, MaxSoundAmount2: max_sound_var2,
+                FanAmount1: fan_var1, FanAmount2: fan_var2,
+                HeightAmount1: height_var1, HeightAmount2: height_var2,
+                FirmAmount1: firm_var1, FirmAmount2: firm_var2,
+                GlobalAmount1: global_var1, GlobalAmount2: global_var2
+            },
+            type: "POST",
+            success: function (result) {
+                $("#partial1").html(result);
+                //$("#partial2").html(result);
+                //alert(result);
+            }
+        });
+    });
+
 </script>

@@ -1,0 +1,129 @@
+﻿
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.0.min.js" type="text/javascript"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+      rel="Stylesheet" type="text/css" />
+
+<form action="../Product/products">
+
+    <select class="target" id="categoryFilterId" style="
+                height:28px;
+                width: 92px;
+                background-color: #1d6aa1;
+                padding: 4px;
+                border: 1px;
+                text-align-last: left;
+                border-radius: 5px;
+
+            ">
+
+        <option>Category</option>
+        @foreach (var categoryName in ViewBag.CategoryListPartial)
+        {
+            <option id="selectedVal" name="sectedValName" value=@categoryName.Category_ID style="background-color:white;"> @categoryName.Category_Name </option>
+
+        }
+    </select>
+
+
+
+
+    <input type="text" id="txtSubCategory" name="SubCategoryName"
+           style="
+                height:28px;
+                width:290px;
+                border-radius: 5px;
+                margin-left:-4px;
+                border-color:transparent;
+                "
+           placeholder="Search..." />
+
+    @*<input style="display:none" name="sectedValName" value="@categoryName.Category_ID" />*@
+    <input type="hidden" id="hfCategory" name="CategoryId" />
+
+    <input type="hidden" id="hfSubCategory" name="SubCategoryId" />
+    @*<br /><br />
+        <input type="submit" id="btnSubmit" value="Submit" />
+        <br /><br />
+        <input type="text" id="txtTestId" name="txtTestName" />*@
+    <button id="submitButtonId" type="submit" name="learn" value="myimage" style="border-radius:5px; height:28px ;width:25px;">
+        <img src="https://i.imgur.com/CGUKlTp.png[/img]" width="30" height="28" style="margin-top:-3px;  margin-left:-10px;border-radius:5px; " />
+    </button>
+</form>
+
+
+<br />
+
+
+
+
+<script>
+    var SelectedCategoryIdVar = "Category";
+    var SelectedSubCategoryIdVar = "0";
+
+    //category search bar
+    $(document).ready(function () {
+
+        $("#categoryFilterId").change(function () {
+            console.log(SelectedCategoryIdVar);
+
+            SelectedCategoryIdVar = $("#categoryFilterId").val(); // category ID +
+            $("#txtTestId").val(SelectedCategoryIdVar);
+            $("#hfCategory").val(SelectedCategoryIdVar);
+            $.ajax({
+                type: "Post",
+                url: "/Search/GetFilteredSubCategories?categoryId=" + SelectedCategoryIdVar,
+                contentType: "html",
+
+                success: function (response) {
+
+                    $("#SubCategory_ID").empty();
+                    $("#SubCategory_ID").append(response);
+                }
+            })
+        })
+    })
+    //SubCategory Search bar
+    $(function () {
+        $("#txtSubCategory").autocomplete({
+
+            source: function (request, response) {
+                //console.log(SelectedCategoryIdVar);
+                SelectedSubCategoryIdVar = $("#categoryFilterId").val()
+                $.ajax({
+                    url: '../Search/AutoComplete',
+                    data: "{ 'prefix': '" + request.term + "','filterId':'" + SelectedCategoryIdVar + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#hfSubCategory").val(i.item.val);
+            },
+            minLength: 0
+        }).focus(function () {
+            $(this).autocomplete("search");
+        });
+    });
+</script>

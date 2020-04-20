@@ -184,6 +184,9 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Search\SearchPage.cshtml" />
     <Content Include="Views\Shared\SubOptionPartial.cshtml" />
+    <Content Include="Views\Search\GetCategoryListPartial.cshtml" />
+    <Content Include="Views\Product\SlidePartial.cshtml" />
+    <Content Include="Views\Product\ProductResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
